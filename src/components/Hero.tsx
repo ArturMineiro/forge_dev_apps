@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Hero() {
   return (
     <section className="flex-1 flex flex-col items-center justify-center text-center px-6 bg-gradient-to-r from-blue-600 to-purple-600 text-white">

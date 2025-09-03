@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Services() {
   return (
     <section id="services" className="container mx-auto py-16 px-6">
