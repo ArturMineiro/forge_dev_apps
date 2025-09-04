@@ -1,1 +1,26 @@
+/* src/index.css */
 @import "tailwindcss";
+
+/* Paleta (tokens) */
+@theme {
+  --color-brand: #6D28D9;      /* roxo */
+  --color-brand-600: #7C3AED;
+
+  --color-accent: #FF3EA5;     /* rosa “neon” */
+  --color-accent-600: #E83694;
+
+  --color-light-bg: #FFFFFF;
+  --color-light-muted: #F3F4F6;
+  --color-light-fg: #111827;
+  --color-light-fg-muted: #6B7280;
+  --color-light-border: #E5E7EB;
+
+  --color-dark-bg: #0F0F14;
+  --color-dark-muted: #14151C;
+  --color-dark-fg: #E5E7EB;
+  --color-dark-fg-muted: #9CA3AF;
+  --color-dark-border: #1F2937;
+}
+
+/* opcional: rolagem suave */
+html { scroll-behavior: smooth; }
