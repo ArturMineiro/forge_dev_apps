@@ -79,7 +79,9 @@ export default function Navbar() {
 
         <ul className="hidden md:flex items-center gap-6">
           {NAV_LINKS.map((l) => (
-            <li key={l.id}><LinkItem {...l} /></li>
+            <li key={l.id}>
+              <LinkItem {...l} />
+            </li>
           ))}
           <li>
             <a
@@ -98,19 +100,34 @@ export default function Navbar() {
           aria-label="Abrir menu"
           onClick={() => setMenuOpen((v) => !v)}
         >
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          <svg
+            width="22"
+            height="22"
+            viewBox="0 0 24 24"
+            fill="none"
+            aria-hidden="true"
+          >
+            <path
+              d="M3 6h18M3 12h18M3 18h18"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+            />
           </svg>
         </button>
       </nav>
 
       <div
         id="mobile-menu"
-        className={`md:hidden border-t border-light-border dark:border-dark-border ${menuOpen ? "block" : "hidden"}`}
+        className={`md:hidden border-t border-light-border dark:border-dark-border ${
+          menuOpen ? "block" : "hidden"
+        }`}
       >
         <ul className="mx-auto max-w-7xl px-4 md:px-6 flex flex-col gap-2 py-3">
           {NAV_LINKS.map((l) => (
-            <li key={l.id}><LinkItem {...l} /></li>
+            <li key={l.id}>
+              <LinkItem {...l} />
+            </li>
           ))}
           <li className="pt-1">
             <a
