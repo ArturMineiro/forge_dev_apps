@@ -4,7 +4,7 @@ import Services from "./components/Service";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-
+import Customers from "./components/Customers";
 function App() {
   return (
     <div className="flex flex-col min-h-screen bg-gray-50 text-gray-800">
@@ -12,6 +12,7 @@ function App() {
       <Hero />
       <Services />
       <About />
+      <Customers />
       <Contact />
       <Footer />
     </div>
