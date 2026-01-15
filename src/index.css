@@ -1,15 +1,22 @@
 @import "tailwindcss";
 
+/* --- A MÁGICA DO TEMA NO TAILWIND 4 --- */
+/* Isso diz ao Tailwind: "Ative o dark mode quando a classe .dark estiver no HTML" */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  /* Definindo o Roxo (Purple/Violet) como cor primária */
+  /* Cores personalizadas */
   --color-primary: --color-violet-600;
   --color-primary-hover: --color-violet-700;
-  
-  /* Secundária Branca (geralmente usada em fundos ou textos sobre o roxo) */
   --color-secondary: --color-white;
 }
 
-/* Adicionando suavidade na rolagem da página */
+/* Suavidade global */
 html {
   scroll-behavior: smooth;
+}
+
+/* Garante que o corpo ocupe a altura toda para mostrar a cor de fundo */
+body {
+  min-height: 100vh;
 }

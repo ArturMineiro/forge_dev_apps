@@ -4,14 +4,14 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    // MUDANÇA AQUI: bg-slate-950 e border-slate-800
-    <footer className="bg-slate-950 text-slate-300 py-12 border-t border-slate-900">
+    // MUDANÇA: bg-violet-100 no Light, border-violet-200
+    <footer className="bg-violet-100 dark:bg-slate-950 text-gray-600 dark:text-slate-300 py-12 border-t border-violet-200 dark:border-slate-900 transition-colors">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-between items-center mb-8">
           
           <div className="flex items-center gap-3 mb-4 md:mb-0">
             <img src="/favicon.svg" alt="Logo ForgeDevApps" className="w-8 h-8" />
-            <span className="text-2xl font-bold text-white tracking-tight">
+            <span className="text-2xl font-bold text-gray-800 dark:text-white tracking-tight transition-colors">
               Forge<span className="text-violet-600">Dev</span>Apps
             </span>
           </div>
@@ -31,7 +31,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
+        <div className="border-t border-violet-200 dark:border-slate-900 pt-8 flex flex-col md:flex-row justify-between items-center text-sm">
           <p>&copy; {currentYear} ForgeDevApps. Todos os direitos reservados.</p>
           <div className="flex gap-2 items-center mt-4 md:mt-0">
              <span>Rio de Janeiro - RJ 🇧🇷</span>
