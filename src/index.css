@@ -1,1 +1,15 @@
 @import "tailwindcss";
+
+@theme {
+  /* Definindo o Roxo (Purple/Violet) como cor primária */
+  --color-primary: --color-violet-600;
+  --color-primary-hover: --color-violet-700;
+  
+  /* Secundária Branca (geralmente usada em fundos ou textos sobre o roxo) */
+  --color-secondary: --color-white;
+}
+
+/* Adicionando suavidade na rolagem da página */
+html {
+  scroll-behavior: smooth;
+}
