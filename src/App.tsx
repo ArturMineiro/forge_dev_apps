@@ -11,18 +11,18 @@ function App() {
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       {/* ESTRUTURA GLOBAL DE CORES:
-          Light Mode: bg-amber-50 (Amarelo Creme Suave) + Texto Cinza Escuro
-          Dark Mode: bg-slate-950 (Azul Noturno) + Texto Branco
+          Light Mode: Fundo Lilás Claro (bg-violet-100), textos cinza escuro (text-gray-800)
+          Dark Mode: Fundo Cinza Escuro (bg-slate-950), textos cinza claro (text-gray-100)
       */}
-      <div className="relative min-h-screen transition-colors duration-500 ease-in-out bg-amber-50 dark:bg-slate-950 text-gray-800 dark:text-gray-100 pt-20 overflow-x-hidden">
+      <div className="relative min-h-screen transition-colors duration-500 ease-in-out bg-gray-50 dark:bg-slate-950 text-gray-800 dark:text-gray-100 pt-20 overflow-x-hidden">
         
-        {/* EFEITO BLOB (Apenas no Dark Mode) */}
+        {/* EFEITO BLOB (Aparece SOMENTE no Dark Mode no site todo) */}
         <div className="fixed inset-0 z-0 pointer-events-none hidden dark:block">
            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-violet-600/20 blur-[120px] rounded-full mix-blend-screen animate-pulse"></div>
            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-600/10 blur-[120px] rounded-full mix-blend-screen"></div>
         </div>
 
-        {/* Conteúdo */}
+        {/* Conteúdo do Site (z-10 para ficar acima do fundo) */}
         <div className="relative z-10">
           <Navbar />
           <Hero />
