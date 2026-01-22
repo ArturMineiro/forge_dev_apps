@@ -6,13 +6,14 @@ import Portfolio from "./components/Portfolio";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import WhatsAppButton from "./components/WhatsAppButton"; 
 
 function App() {
   return (
     <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
       {/* ESTRUTURA GLOBAL DE CORES:
-          Light Mode: Fundo Lilás Claro (bg-violet-100), textos cinza escuro (text-gray-800)
-          Dark Mode: Fundo Cinza Escuro (bg-slate-950), textos cinza claro (text-gray-100)
+          Light Mode: bg-gray-50 (Cinza Suave)
+          Dark Mode: bg-slate-950 (Azul Noturno)
       */}
       <div className="relative min-h-screen transition-colors duration-500 ease-in-out bg-gray-50 dark:bg-slate-950 text-gray-800 dark:text-gray-100 pt-20 overflow-x-hidden">
         
@@ -32,6 +33,10 @@ function App() {
           <Contact />
           <Footer />
         </div>
+
+        {/* BOTÃO FLUTUANTE DO WHATSAPP (Fica acima de tudo) */}
+        <WhatsAppButton />
+
       </div>
     </ThemeProvider>
   );

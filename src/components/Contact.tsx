@@ -1,4 +1,4 @@
-import { Mail, MapPin, Phone, Send } from "lucide-react";
+import { Mail, MapPin, Phone, Send, Instagram } from "lucide-react";
 
 export default function Contact() {
   return (
@@ -21,6 +21,7 @@ export default function Contact() {
             </p>
             
             <div className="space-y-6">
+              {/* Localização */}
               <div className="flex items-start gap-4 group">
                 <div className="p-3 bg-violet-100 dark:bg-slate-800 text-violet-600 rounded-lg">
                   <MapPin className="w-6 h-6" />
@@ -31,6 +32,7 @@ export default function Contact() {
                 </div>
               </div>
 
+              {/* Email */}
               <div className="flex items-start gap-4 group">
                 <div className="p-3 bg-violet-100 dark:bg-slate-800 text-violet-600 rounded-lg">
                   <Mail className="w-6 h-6" />
@@ -41,15 +43,35 @@ export default function Contact() {
                 </div>
               </div>
 
+              {/* WhatsApp */}
               <div className="flex items-start gap-4 group">
                 <div className="p-3 bg-violet-100 dark:bg-slate-800 text-violet-600 rounded-lg">
                   <Phone className="w-6 h-6" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">WhatsApp</h4>
-                  <p className="text-gray-600 dark:text-gray-400">(21) 99999-9999</p>
+                  <p className="text-gray-600 dark:text-gray-400">(21) 99301-5515</p>
                 </div>
               </div>
+
+              {/* Instagram (NOVO) */}
+              <div className="flex items-start gap-4 group">
+                <div className="p-3 bg-violet-100 dark:bg-slate-800 text-violet-600 rounded-lg">
+                  <Instagram className="w-6 h-6" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-gray-900 dark:text-white">Instagram</h4>
+                  <a 
+                    href="https://www.instagram.com/forgedevapps/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors font-medium"
+                  >
+                    @forgedevapps
+                  </a>
+                </div>
+              </div>
+
             </div>
           </div>
 

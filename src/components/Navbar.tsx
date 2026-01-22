@@ -7,12 +7,11 @@ export default function Navbar() {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    // MUDANÇA: bg-violet-100/95 no Light Mode (Lilás Claro)
     <header className="fixed w-full top-0 left-0 z-50 bg-violet-100/95 dark:bg-slate-900/95 backdrop-blur-md shadow-sm border-b border-violet-200 dark:border-slate-800 transition-colors duration-300">
       <nav className="container mx-auto flex justify-between items-center py-4 px-6">
         
         <div className="flex items-center gap-3">
-          <img src="/favicon.svg" alt="Logo ForgeDevApps" className="w-10 h-10" />
+          <img src="/logo_forge.png" alt="Logo ForgeDevApps" className="w-12 h-12 object-contain" />
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white tracking-tight">
             Forge<span className="text-violet-600">Dev</span>Apps
           </h1>
@@ -42,7 +41,6 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Menu Mobile também com fundo lilás */}
       {isOpen && (
         <div className="md:hidden absolute top-full left-0 w-full bg-violet-100 dark:bg-slate-900 border-t border-violet-200 dark:border-slate-800 shadow-lg flex flex-col items-center py-6 space-y-6 animate-in slide-in-from-top-5">
           <a href="#services" className="text-lg font-medium text-gray-700 dark:text-gray-200 hover:text-violet-600 dark:hover:text-violet-400" onClick={toggleMenu}>Serviços</a>
