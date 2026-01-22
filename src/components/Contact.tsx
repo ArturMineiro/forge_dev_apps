@@ -1,23 +1,58 @@
 import { useState } from "react";
-import { Mail, MapPin, Phone, Send, Instagram, CheckCircle2, Loader2 } from "lucide-react";
+import { Mail, MapPin, Phone, Send, Instagram, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
+
+// Tipo para os erros
+type FormErrors = {
+  name?: string;
+  email?: string;
+  subject?: string;
+  message?: string;
+  general?: string; // Para erro de conexão/servidor
+};
 
 export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errors, setErrors] = useState<FormErrors>({}); // Estado para controlar erros visuais
 
   // Função que envia o formulário
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
-
-    const formData = new FormData(e.currentTarget);
+    setErrors({}); // Limpa erros anteriores ao tentar enviar
     
-    // Transforma os dados em objeto JSON
+    const form = e.currentTarget;
+    const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
 
+    // --- ETAPA 1: VALIDAÇÃO VISUAL ---
+    const newErrors: FormErrors = {};
+
+    // Valida campos vazios
+    if (!data.name) newErrors.name = "O nome é obrigatório.";
+    if (!data.subject) newErrors.subject = "O assunto é obrigatório.";
+    if (!data.message) newErrors.message = "A mensagem não pode estar vazia.";
+    
+    // Valida Email (Vazio e Formato)
+    if (!data.email) {
+      newErrors.email = "O email é obrigatório.";
+    } else {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(data.email as string)) {
+        newErrors.email = "Digite um email válido (ex: nome@gmail.com)";
+      }
+    }
+
+    // Se houver erros, atualiza o estado e PARA TUDO (não envia)
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    // --- ETAPA 2: ENVIO ---
+    setIsSubmitting(true);
+
     try {
-      // MUDANÇA: URL do FormSubmit com seu e-mail real
-      const response = await fetch("https://formsubmit.co/ajax/forgeapps.faj@gmail.com", {
+      const response = await fetch(`https://formsubmit.co/ajax/forgeapps.faj@gmail.com`, {
         method: "POST",
         headers: { 
           'Content-Type': 'application/json',
@@ -25,27 +60,41 @@ export default function Contact() {
         },
         body: JSON.stringify({
           ...data,
-          _subject: `Novo Contato do Site: ${data.name}`, // Assunto do email
-          _template: "table", // Formato bonitinho de tabela
-          _captcha: "false" // Desativa o captcha chato (opcional)
+          _template: "table",
+          _captcha: "false"
         })
       });
 
-      if (response.ok) {
+      const result = await response.json();
+
+      if (response.ok || result.success === "true") {
         setIsSuccess(true);
-        e.currentTarget.reset(); // Limpa o formulário
-        
-        // Remove a mensagem de sucesso após 5 segundos
+        form.reset();
         setTimeout(() => setIsSuccess(false), 5000);
       } else {
-        alert("Ocorreu um erro ao enviar. Tente novamente pelo WhatsApp.");
+        setErrors({ general: "Erro no servidor. Tente enviar pelo WhatsApp." });
       }
+
     } catch (error) {
-      alert("Erro de conexão. Verifique sua internet.");
+      // Erro de conexão (CORS ou falta de internet)
+      console.error(error);
+      setErrors({ general: "Houve um problema de conexão. Verifique sua internet ou chame no WhatsApp." });
     } finally {
       setIsSubmitting(false);
     }
   };
+
+  // Helper para classes de input (se tiver erro, borda vermelha)
+  const getInputClass = (error?: string) => `
+    w-full px-4 py-3 rounded-lg 
+    bg-gray-50 dark:bg-slate-950 
+    text-gray-900 dark:text-white 
+    outline-none transition-all border
+    ${error 
+      ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-200 dark:focus:ring-red-900/30' 
+      : 'border-gray-200 dark:border-slate-700 focus:border-violet-600 focus:ring-2 focus:ring-violet-200 dark:focus:ring-violet-900'
+    }
+  `;
 
   return (
     <section id="contact" className="py-20 bg-transparent transition-colors">
@@ -120,9 +169,10 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Formulário Funcional com formsubmit.co */}
+          {/* Formulário Funcional */}
           <form 
             onSubmit={handleSubmit}
+            noValidate
             className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 transition-colors relative overflow-hidden"
           >
             {/* Feedback de Sucesso */}
@@ -135,45 +185,63 @@ export default function Contact() {
             )}
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+              {/* NOME */}
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nome</label>
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Nome <span className="text-violet-500">*</span>
+                </label>
                 <input 
-                  required
-                  name="name"
-                  type="text" id="name" placeholder="Seu nome"
-                  className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 text-gray-900 dark:text-white focus:border-violet-600 focus:ring-2 focus:ring-violet-200 dark:focus:ring-violet-900 outline-none transition-all"
+                  name="name" type="text" id="name" placeholder="Seu nome"
+                  // Se mudar o input, a gente poderia limpar o erro aqui, mas vamos manter simples
+                  className={getInputClass(errors.name)}
                 />
+                {errors.name && <p className="mt-1 text-sm text-red-500 flex items-center gap-1"><AlertCircle className="w-3 h-3"/> {errors.name}</p>}
               </div>
+
+              {/* EMAIL */}
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                  Email <span className="text-violet-500">*</span>
+                </label>
                 <input 
-                  required
-                  name="email"
-                  type="email" id="email" placeholder="seu@email.com"
-                  className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 text-gray-900 dark:text-white focus:border-violet-600 focus:ring-2 focus:ring-violet-200 dark:focus:ring-violet-900 outline-none transition-all"
+                  name="email" type="email" id="email" placeholder="seu@email.com"
+                  className={getInputClass(errors.email)}
                 />
+                {errors.email && <p className="mt-1 text-sm text-red-500 flex items-center gap-1"><AlertCircle className="w-3 h-3"/> {errors.email}</p>}
               </div>
             </div>
 
+            {/* ASSUNTO */}
             <div className="mb-6">
-              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Assunto</label>
+              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Assunto <span className="text-violet-500">*</span>
+              </label>
               <input 
-                required
-                name="subject"
-                type="text" id="subject" placeholder="Como podemos ajudar?"
-                className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 text-gray-900 dark:text-white focus:border-violet-600 focus:ring-2 focus:ring-violet-200 dark:focus:ring-violet-900 outline-none transition-all"
+                name="subject" type="text" id="subject" placeholder="Como podemos ajudar?"
+                className={getInputClass(errors.subject)}
               />
+              {errors.subject && <p className="mt-1 text-sm text-red-500 flex items-center gap-1"><AlertCircle className="w-3 h-3"/> {errors.subject}</p>}
             </div>
 
+            {/* MENSAGEM */}
             <div className="mb-6">
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Mensagem</label>
+              <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Mensagem <span className="text-violet-500">*</span>
+              </label>
               <textarea 
-                required
-                name="message"
-                id="message" rows={4} placeholder="Conte sobre o seu projeto..."
-                className="w-full px-4 py-3 rounded-lg bg-gray-50 dark:bg-slate-950 border border-gray-200 dark:border-slate-700 text-gray-900 dark:text-white focus:border-violet-600 focus:ring-2 focus:ring-violet-200 dark:focus:ring-violet-900 outline-none transition-all resize-none"
+                name="message" id="message" rows={4} placeholder="Conte sobre o seu projeto..."
+                className={`${getInputClass(errors.message)} resize-none`}
               ></textarea>
+              {errors.message && <p className="mt-1 text-sm text-red-500 flex items-center gap-1"><AlertCircle className="w-3 h-3"/> {errors.message}</p>}
             </div>
+
+            {/* MENSAGEM DE ERRO GERAL (Conexão) */}
+            {errors.general && (
+              <div className="mb-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-3 text-red-600 dark:text-red-300 text-sm">
+                 <AlertCircle className="w-5 h-5 flex-shrink-0" />
+                 {errors.general}
+              </div>
+            )}
 
             <button 
               type="submit" 
