@@ -6,16 +6,30 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  // Função para rolar suavemente para o topo
+  const scrollToTop = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <header className="fixed w-full top-0 left-0 z-50 bg-violet-100/95 dark:bg-slate-900/95 backdrop-blur-md shadow-sm border-b border-violet-200 dark:border-slate-800 transition-colors duration-300">
       <nav className="container mx-auto flex justify-between items-center py-4 px-6">
         
-        <div className="flex items-center gap-3">
-          <img src="/logo_forge.png" alt="Logo ForgeDevApps" className="w-12 h-12 object-contain" />
+        {/* LOGO AGORA É UM LINK PARA O TOPO */}
+        <a 
+          href="#" 
+          onClick={scrollToTop} 
+          className="flex items-center gap-3 group cursor-pointer"
+        >
+          <img src="/logo_forge.png" alt="Logo ForgeDevApps" className="w-12 h-12 object-contain group-hover:scale-105 transition-transform" />
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white tracking-tight">
             Forge<span className="text-violet-600">Dev</span>Apps
           </h1>
-        </div>
+        </a>
 
         <div className="hidden md:flex items-center gap-8">
           <ul className="flex space-x-8 font-medium text-gray-600 dark:text-gray-300">
