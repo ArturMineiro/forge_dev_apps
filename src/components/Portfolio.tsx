@@ -1,18 +1,17 @@
 import { ExternalLink } from "lucide-react";
 
 const projects = [
-
   {
     title: "Clínica Lilitathá",
     description: "Site institucional para clínica de fisioterapia e reabilitação. Foco em transmitir confiança, com apresentação de equipe e serviços.",
-    tags: ["React", "TypeScript", "Vite"],
+    tags: ["React", "TypeScript", "Tailwind", "Vite"],
     image: "/lilitahta.png",
     link: "https://lilitatah.forgedevapps.com/",
   },
   {
     title: "Leni Manicure",
     description: "Plataforma de beleza para agendamentos e portfólio. Interface elegante para realçar o cuidado e a arte das unhas.",
-    tags: ["React", "TypeScript", "Vite"],
+    tags: ["React", "TypeScript", "Tailwind", "Vite"],
     image: "/leni_manicure.png",
     link: "https://leni-manicure.forgedevapps.com/",
   },
