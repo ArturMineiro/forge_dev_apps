@@ -120,7 +120,7 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Formulário Funcional */}
+          {/* Formulário Funcional com formsubmit.co */}
           <form 
             onSubmit={handleSubmit}
             className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 transition-colors relative overflow-hidden"
