@@ -85,10 +85,12 @@ export default function Contact() {
   };
 
   // Helper para classes de input (se tiver erro, borda vermelha)
+  // FIX: Adicionado 'placeholder:text-gray-400' para garantir visibilidade do texto de exemplo
   const getInputClass = (error?: string) => `
     w-full px-4 py-3 rounded-lg 
     bg-gray-50 dark:bg-slate-950 
     text-gray-900 dark:text-white 
+    placeholder:text-gray-400 dark:placeholder:text-gray-500
     outline-none transition-all border
     ${error 
       ? 'border-red-500 focus:border-red-500 focus:ring-2 focus:ring-red-200 dark:focus:ring-red-900/30' 
@@ -192,7 +194,6 @@ export default function Contact() {
                 </label>
                 <input 
                   name="name" type="text" id="name" placeholder="Seu nome"
-                  // Se mudar o input, a gente poderia limpar o erro aqui, mas vamos manter simples
                   className={getInputClass(errors.name)}
                 />
                 {errors.name && <p className="mt-1 text-sm text-red-500 flex items-center gap-1"><AlertCircle className="w-3 h-3"/> {errors.name}</p>}
