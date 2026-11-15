@@ -1,4 +1,5 @@
 import { ExternalLink } from "lucide-react";
+import Carousel from "./Carousel";
 
 const projects = [
   {
@@ -59,7 +60,7 @@ export default function Portfolio() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <Carousel label="Projetos entregues">
           {projects.map((project) => (
             <article
               key={project.title}
@@ -117,7 +118,7 @@ export default function Portfolio() {
               </div>
             </article>
           ))}
-        </div>
+        </Carousel>
       </div>
     </section>
   );

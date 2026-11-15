@@ -1,4 +1,5 @@
 import { Globe, Smartphone, Database, LayoutDashboard, Cloud, Workflow } from "lucide-react";
+import Carousel from "./Carousel";
 
 const services = [
   { icon: <Globe className="w-10 h-10" />, title: "Desenvolvimento Web", description: "Sites institucionais, Landing Pages e aplicações web de alta performance." },
@@ -23,11 +24,11 @@ export default function Services() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <Carousel label="Nossas especialidades">
           {services.map((service, index) => (
             <div 
               key={index} 
-              className="group p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 hover:border-violet-200 dark:hover:border-violet-900 shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+              className="group p-6 sm:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 hover:border-violet-200 dark:hover:border-violet-900 shadow-sm hover:shadow-xl md:hover:-translate-y-2 transition-all duration-300"
             >
               <div className="mb-6 text-violet-600 bg-violet-50 dark:bg-slate-800 w-fit p-4 rounded-xl group-hover:bg-violet-600 group-hover:text-white transition-colors duration-300">
                 {service.icon}
@@ -42,7 +43,7 @@ export default function Services() {
               </p>
             </div>
           ))}
-        </div>
+        </Carousel>
       </div>
     </section>
   );
