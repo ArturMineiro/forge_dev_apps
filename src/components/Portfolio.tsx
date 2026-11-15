@@ -3,13 +3,6 @@ import Carousel from "./Carousel";
 
 const projects = [
   {
-    title: "RouteFlow",
-    description: "Plataforma SaaS para gestão de equipes de campo: rotas, agenda, visitas com fotos, cartas de autorização, despesas e relatórios — no computador e no celular.",
-    tags: ["React", "Vite", "PWA", "SaaS"],
-    image: "/routeflow.webp",
-    link: "https://routeflow.forgedevapps.com/",
-  },
-  {
     title: "Bateu a Fome",
     description: "SaaS de cardápio online para quem vende comida pelo WhatsApp: o lojista monta a loja em minutos e o pedido chega pronto no WhatsApp, sem comissão.",
     tags: ["React", "Vite", "SaaS", "WhatsApp"],
@@ -22,6 +15,13 @@ const projects = [
     tags: ["React", "Vite", "PWA", "Recharts"],
     image: "/afinances-cover.webp",
     link: "https://afinances.forgedevapps.com/",
+  },
+  {
+    title: "RouteFlow",
+    description: "Plataforma SaaS para gestão de equipes de campo: rotas, agenda, visitas com fotos, cartas de autorização, despesas e relatórios — no computador e no celular.",
+    tags: ["React", "Vite", "PWA", "SaaS"],
+    image: "/routeflow.webp",
+    link: "https://routeflow.forgedevapps.com/",
   },
   {
     title: "Steak Burger",
