@@ -19,7 +19,7 @@ const projects = [
     title: "Afinances",
     description: "Controle financeiro pessoal com contas a pagar, a receber e saldo previsto. Gráficos, exportação para Excel e instalável como app.",
     tags: ["React", "Vite", "PWA", "Recharts"],
-    image: "/afinances.webp",
+    image: "/afinances-cover.webp",
     link: "https://afinances.forgedevapps.com/",
   },
   {
