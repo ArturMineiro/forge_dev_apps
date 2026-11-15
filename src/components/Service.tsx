@@ -1,4 +1,4 @@
-import { Globe, Smartphone, Database, LayoutDashboard, Cloud } from "lucide-react";
+import { Globe, Smartphone, Database, LayoutDashboard, Cloud, Workflow } from "lucide-react";
 
 const services = [
   { icon: <Globe className="w-10 h-10" />, title: "Desenvolvimento Web", description: "Sites institucionais, Landing Pages e aplicações web de alta performance." },
@@ -6,6 +6,7 @@ const services = [
   { icon: <Database className="w-10 h-10" />, title: "Sistemas Backend", description: "APIs robustas, integrações de banco de dados e arquitetura escalável." },
   { icon: <LayoutDashboard className="w-10 h-10" />, title: "Sistemas de Gestão", description: "Painéis administrativos personalizados para gerenciar seu negócio." },
   { icon: <Cloud className="w-10 h-10" />, title: "Cloud & DevOps", description: "Configuração de servidores e deploy automatizado." },
+  { icon: <Workflow className="w-10 h-10" />, title: "Automações & Integrações", description: "Integração com WhatsApp, pagamentos e APIs para automatizar processos e ganhar tempo." },
 ];
 
 export default function Services() {
