@@ -2,14 +2,33 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-    <title>ForgeDevApps</title>
-    
-    <meta name="description" content="Desenvolvimento de softwares, sites e aplicativos sob medida para o seu negócio.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <title>ForgeDevApps — Sites, Apps e Sistemas sob medida</title>
+    <meta name="description" content="Desenvolvimento de softwares, sites e aplicativos sob medida para o seu negócio." />
+    <meta name="theme-color" content="#7c3aed" />
+
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="ForgeDevApps" />
+    <meta property="og:title" content="ForgeDevApps — Sites, Apps e Sistemas sob medida" />
+    <meta property="og:description" content="Desenvolvimento de softwares, sites e aplicativos sob medida para o seu negócio." />
+    <meta property="og:url" content="https://forgedevapps.com/" />
+    <meta property="og:image" content="https://forgedevapps.com/logo_forge.png" />
+
+    <script>
+      // Aplica o tema salvo antes de renderizar (evita "piscar" claro no modo escuro)
+      (function () {
+        try {
+          var t = localStorage.getItem("vite-ui-theme") || "system";
+          var dark = t === "dark" || (t === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.add(dark ? "dark" : "light");
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

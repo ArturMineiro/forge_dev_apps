@@ -3,19 +3,19 @@ import { CheckCircle2, Zap, Users, Target } from "lucide-react";
 export default function About() {
   return (
     // MUDANÇA: bg-transparent para aceitar o Amarelo/Dark global
-    <section id="about" className="py-20 bg-transparent transition-colors">
+    <section id="about" className="relative scroll-mt-24 py-16 sm:py-20 bg-transparent transition-colors">
       
       {/* Decoração sutil no fundo */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-violet-600/5 blur-[120px] -z-10"></div>
       
-      <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
           
-          <div className="lg:w-1/2">
+          <div className="w-full lg:w-1/2">
             <h2 className="text-3xl md:text-4xl font-bold mb-6 leading-tight text-gray-900 dark:text-white transition-colors">
               Mais do que código, entregamos <span className="text-violet-600">resultados reais</span>.
             </h2>
-            <p className="text-gray-600 dark:text-slate-400 text-lg mb-8 leading-relaxed transition-colors">
+            <p className="text-gray-600 dark:text-slate-400 text-base sm:text-lg mb-8 leading-relaxed transition-colors">
               A ForgeDevApps nasceu no Rio de Janeiro com a missão de modernizar o mercado digital. Não somos apenas desenvolvedores; somos parceiros estratégicos que entendem de negócio. Unimos design intuitivo com engenharia de software robusta.
             </p>
 
@@ -66,11 +66,13 @@ export default function About() {
             </div>
           </div>
 
-          <div className="lg:w-1/2 relative">
+          <div className="w-full lg:w-1/2 relative">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white dark:border-slate-800 group">
               <img 
                 src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=1000&auto=format&fit=crop" 
-                alt="Equipe trabalhando" 
+                alt="Equipe trabalhando"
+                loading="lazy"
+                decoding="async" 
                 className="w-full h-full object-cover opacity-90 dark:opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-amber-50/50 via-transparent to-transparent dark:from-slate-950 dark:via-transparent"></div>

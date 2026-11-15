@@ -15,12 +15,12 @@ function App() {
           Light Mode: bg-gray-50 (Cinza Suave)
           Dark Mode: bg-slate-950 (Azul Noturno)
       */}
-      <div className="relative min-h-screen transition-colors duration-500 ease-in-out bg-gray-50 dark:bg-slate-950 text-gray-800 dark:text-gray-100 pt-20 overflow-x-hidden">
+      <div className="relative min-h-screen transition-colors duration-500 ease-in-out bg-gray-50 dark:bg-slate-950 text-gray-800 dark:text-gray-100 pt-20 overflow-x-clip">
         
         {/* EFEITO BLOB (Aparece SOMENTE no Dark Mode no site todo) */}
         <div className="fixed inset-0 z-0 pointer-events-none hidden dark:block">
-           <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-violet-600/20 blur-[120px] rounded-full mix-blend-screen animate-pulse"></div>
-           <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-indigo-600/10 blur-[120px] rounded-full mix-blend-screen"></div>
+           <div className="absolute top-0 right-0 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-violet-600/20 blur-[120px] rounded-full mix-blend-screen animate-pulse motion-reduce:animate-none"></div>
+           <div className="absolute bottom-0 left-0 w-[300px] h-[300px] sm:w-[500px] sm:h-[500px] bg-indigo-600/10 blur-[120px] rounded-full mix-blend-screen"></div>
         </div>
 
         {/* Conteúdo do Site (z-10 para ficar acima do fundo) */}

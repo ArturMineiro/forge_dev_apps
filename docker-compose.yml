@@ -1,0 +1,27 @@
+services:
+  # Produção local: build otimizado servido pelo Nginx -> http://localhost:8080
+  web:
+    build:
+      context: .
+      target: prod
+    image: forgedevapps:latest
+    container_name: forgedevapps
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+  # Desenvolvimento com hot reload -> http://localhost:5173
+  # Uso: docker compose --profile dev up dev
+  dev:
+    profiles: ["dev"]
+    build:
+      context: .
+      target: dev
+    container_name: forgedevapps-dev
+    ports:
+      - "5173:5173"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./:/app
+      - /app/node_modules

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Mail, MapPin, Phone, Send, Instagram, CheckCircle2, Loader2, AlertCircle } from "lucide-react";
+import { EMAIL, INSTAGRAM_HANDLE, INSTAGRAM_URL, WHATSAPP_DISPLAY, WHATSAPP_LINK } from "../config/contact";
 
 // Tipo para os erros
 type FormErrors = {
@@ -22,22 +23,26 @@ export default function Contact() {
     
     const form = e.currentTarget;
     const formData = new FormData(form);
-    const data = Object.fromEntries(formData.entries());
+    const data = Object.fromEntries(formData.entries()) as Record<string, string>;
+
+    // Honeypot anti-spam: robôs preenchem o campo escondido
+    if (data._honey) return;
+    delete data._honey;
 
     // --- ETAPA 1: VALIDAÇÃO VISUAL ---
     const newErrors: FormErrors = {};
 
     // Valida campos vazios
-    if (!data.name) newErrors.name = "O nome é obrigatório.";
-    if (!data.subject) newErrors.subject = "O assunto é obrigatório.";
-    if (!data.message) newErrors.message = "A mensagem não pode estar vazia.";
+    if (!data.name?.trim()) newErrors.name = "O nome é obrigatório.";
+    if (!data.subject?.trim()) newErrors.subject = "O assunto é obrigatório.";
+    if (!data.message?.trim()) newErrors.message = "A mensagem não pode estar vazia.";
     
     // Valida Email (Vazio e Formato)
     if (!data.email) {
       newErrors.email = "O email é obrigatório.";
     } else {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(data.email as string)) {
+      if (!emailRegex.test(data.email.trim())) {
         newErrors.email = "Digite um email válido (ex: nome@gmail.com)";
       }
     }
@@ -52,22 +57,28 @@ export default function Contact() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`https://formsubmit.co/ajax/forgeapps.faj@gmail.com`, {
+      const response = await fetch(`https://formsubmit.co/ajax/${EMAIL}`, {
         method: "POST",
         headers: { 
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         },
         body: JSON.stringify({
-          ...data,
+          Nome: data.name.trim(),
+          email: data.email.trim(),
+          Assunto: data.subject.trim(),
+          Mensagem: data.message.trim(),
+          _replyto: data.email.trim(),
+          _subject: `Novo contato pelo site: ${data.subject.trim()}`,
           _template: "table",
-          _captcha: "false"
-        })
+          _captcha: "false",
+        }),
       });
 
       const result = await response.json();
 
-      if (response.ok || result.success === "true") {
+      // O FormSubmit responde 200 mesmo quando falha: confiar só no campo "success"
+      if (response.ok && String(result.success) === "true") {
         setIsSuccess(true);
         form.reset();
         setTimeout(() => setIsSuccess(false), 5000);
@@ -99,21 +110,21 @@ export default function Contact() {
   `;
 
   return (
-    <section id="contact" className="py-20 bg-transparent transition-colors">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
+    <section id="contact" className="scroll-mt-24 py-16 sm:py-20 bg-transparent transition-colors">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4 transition-colors">
             Vamos Conversar?
           </h2>
           <div className="w-20 h-1.5 bg-violet-600 mx-auto rounded-full"></div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-12 items-start">
           
           {/* Informações de Contato */}
-          <div className="space-y-8">
+          <div className="space-y-8 min-w-0">
             <h3 className="text-2xl font-bold text-gray-800 dark:text-white transition-colors">Entre em contato</h3>
-            <p className="text-gray-600 dark:text-gray-300 text-lg transition-colors">
+            <p className="text-gray-600 dark:text-gray-300 text-base sm:text-lg transition-colors">
               Tem uma ideia incrível? Estamos prontos para transformar sua visão em realidade.
             </p>
             
@@ -136,7 +147,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">Email</h4>
-                  <p className="text-gray-600 dark:text-gray-400">forgeapps.faj@gmail.com</p>
+                  <a href={`mailto:${EMAIL}`} className="text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors break-all">{EMAIL}</a>
                 </div>
               </div>
 
@@ -147,7 +158,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">WhatsApp</h4>
-                  <p className="text-gray-600 dark:text-gray-400">(21) 99301-5515</p>
+                  <a href={WHATSAPP_LINK} target="_blank" rel="noopener noreferrer" className="text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors whitespace-nowrap">{WHATSAPP_DISPLAY}</a>
                 </div>
               </div>
 
@@ -159,12 +170,13 @@ export default function Contact() {
                 <div>
                   <h4 className="font-semibold text-gray-900 dark:text-white">Instagram</h4>
                   <a 
-                    href="https://www.instagram.com/forgedevapps/" 
+                    href={INSTAGRAM_URL}
+                    
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="text-gray-600 dark:text-gray-400 hover:text-violet-600 dark:hover:text-violet-400 transition-colors font-medium"
                   >
-                    @forgedevapps
+                    {INSTAGRAM_HANDLE}
                   </a>
                 </div>
               </div>
@@ -175,25 +187,28 @@ export default function Contact() {
           <form 
             onSubmit={handleSubmit}
             noValidate
-            className="bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 transition-colors relative overflow-hidden"
+            className="bg-white dark:bg-slate-900 p-5 sm:p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-slate-800 transition-colors relative overflow-hidden"
           >
             {/* Feedback de Sucesso */}
             {isSuccess && (
-              <div className="absolute inset-0 bg-white/95 dark:bg-slate-900/95 flex flex-col items-center justify-center z-10 animate-in fade-in zoom-in">
+              <div className="absolute inset-0 bg-white/95 dark:bg-slate-900/95 flex flex-col items-center justify-center text-center p-6 z-10">
                 <CheckCircle2 className="w-16 h-16 text-green-500 mb-4" />
                 <h3 className="text-2xl font-bold text-gray-800 dark:text-white">Mensagem Enviada!</h3>
                 <p className="text-gray-600 dark:text-gray-300 mt-2">Em breve entraremos em contato.</p>
               </div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            {/* Honeypot anti-spam (invisível para pessoas) */}
+            <input type="text" name="_honey" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
               {/* NOME */}
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Nome <span className="text-violet-500">*</span>
                 </label>
                 <input 
-                  name="name" type="text" id="name" placeholder="Seu nome"
+                  name="name" type="text" id="name" placeholder="Seu nome" autoComplete="name"
                   className={getInputClass(errors.name)}
                 />
                 {errors.name && <p className="mt-1 text-sm text-red-500 flex items-center gap-1"><AlertCircle className="w-3 h-3"/> {errors.name}</p>}
@@ -205,7 +220,7 @@ export default function Contact() {
                   Email <span className="text-violet-500">*</span>
                 </label>
                 <input 
-                  name="email" type="email" id="email" placeholder="seu@email.com"
+                  name="email" type="email" id="email" placeholder="seu@email.com" autoComplete="email" inputMode="email"
                   className={getInputClass(errors.email)}
                 />
                 {errors.email && <p className="mt-1 text-sm text-red-500 flex items-center gap-1"><AlertCircle className="w-3 h-3"/> {errors.email}</p>}

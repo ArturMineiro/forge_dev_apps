@@ -1,0 +1,80 @@
+name: CI/CD - Hostinger
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Lint & Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+
+      - name: Testa imagem Docker
+        run: docker build --target prod -t forgedevapps:ci .
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist
+          include-hidden-files: true
+          retention-days: 7
+
+  deploy:
+    name: Deploy na Hostinger (FTP)
+    needs: build
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://forgedevapps.com
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+
+      - name: Verifica secrets
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          FTP_USERNAME: ${{ secrets.FTP_USERNAME }}
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}
+        run: |
+          missing=0
+          for v in FTP_SERVER FTP_USERNAME FTP_PASSWORD; do
+            if [ -z "${!v}" ]; then echo "::error::Secret $v não configurado (Settings > Secrets and variables > Actions)"; missing=1; fi
+          done
+          exit $missing
+
+      - name: Envia dist/ via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          port: 21
+          protocol: ftp
+          local-dir: ./dist/
+          # Pasta remota relativa ao diretório da conta FTP.
+          # Conta FTP principal da Hostinger já abre em public_html -> "./"
+          server-dir: ${{ vars.FTP_SERVER_DIR || './' }}
+          exclude: |
+            **/.git*
+            **/.git*/**
