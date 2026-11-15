@@ -38,7 +38,7 @@ export default function Navbar() {
         {/* LOGO = LINK PARA O TOPO */}
         <a href="#" onClick={scrollToTop} className="flex items-center gap-2 sm:gap-3 group cursor-pointer min-w-0">
           <img
-            src="/logo_forge.png"
+            src="/logo-forge.png"
             alt="Logo ForgeDevApps"
             width={48}
             height={48}

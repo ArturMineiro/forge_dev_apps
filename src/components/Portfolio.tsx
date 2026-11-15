@@ -9,6 +9,13 @@ const projects = [
     link: "https://routeflow.forgedevapps.com/",
   },
   {
+    title: "Bateu a Fome",
+    description: "SaaS de cardápio online para quem vende comida pelo WhatsApp: o lojista monta a loja em minutos e o pedido chega pronto no WhatsApp, sem comissão.",
+    tags: ["React", "Vite", "SaaS", "WhatsApp"],
+    image: "/bateuafome.webp",
+    link: "https://bateuafomeapp.forgedevapps.com/",
+  },
+  {
     title: "Afinances",
     description: "Controle financeiro pessoal com contas a pagar, a receber e saldo previsto. Gráficos, exportação para Excel e instalável como app.",
     tags: ["React", "Vite", "PWA", "Recharts"],

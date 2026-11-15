@@ -24,7 +24,7 @@ export default function Footer() {
             onClick={scrollToTop}
             className="flex items-center gap-3 group cursor-pointer"
           >
-            <img src="/logo_forge.png" alt="Logo ForgeDevApps" width={40} height={40} className="w-10 h-10 object-contain group-hover:scale-105 transition-transform" />
+            <img src="/logo-forge.png" alt="Logo ForgeDevApps" width={40} height={40} className="w-10 h-10 object-contain group-hover:scale-105 transition-transform" />
             <span className="text-2xl font-bold text-gray-800 dark:text-white tracking-tight transition-colors">
               Forge<span className="text-violet-600">Dev</span>Apps
             </span>
